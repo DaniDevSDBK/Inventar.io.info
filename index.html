@@ -40,6 +40,11 @@
     .hero-actions { display:flex; gap:10px; flex-wrap:wrap }
     .meta { color:var(--muted); font-size:12px; margin-top:19px }
     .demo-pending { max-width:900px; margin-inline:auto; padding:30px; border:1px dashed var(--line); border-radius:20px; background:color-mix(in srgb,var(--surface),transparent 15%); color:var(--muted); text-align:center }
+    .capture-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px }
+    .capture { overflow:hidden; margin:0; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface) }
+    .capture-placeholder { display:grid; place-items:center; aspect-ratio:16/10; padding:18px; background:linear-gradient(145deg,var(--surface2),var(--bg)); color:var(--muted); text-align:center; font-size:12px }
+    .capture-placeholder span { display:block; font-size:25px; margin-bottom:5px; color:var(--blue) }
+    .capture figcaption { padding:12px 14px; color:var(--text); font-size:13px; font-weight:650 }
     .demo-pending strong { display:block; color:var(--text); font-size:16px }
     .muted-note { color:var(--muted); margin:17px 2px 0; font-size:12px }
     .demo-video { max-width:900px; margin-inline:auto }
@@ -81,8 +86,8 @@
     .proof-mark { width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:#ffffff18;color:#fff;font-size:17px }
     .footer { margin-top:42px; padding:24px 0 36px; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:20px; color:var(--muted); font-size:11px }
     @media(max-width:900px) { .topbar-inner{grid-template-columns:1fr auto;gap:5px 14px}.nav{grid-column:1/-1;grid-row:2;justify-content:flex-start;padding:2px 0 4px}.hero{padding:65px 0 45px} }
-    @media(max-width:680px) { .shell{width:min(100% - 28px,1160px)}.topbar{padding:8px 0 5px}.topbar-inner{gap:3px 8px}.nav{overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.hero{padding:49px 0 30px}.grid-3{grid-template-columns:1fr 1fr}.architecture,.contribution{grid-template-columns:1fr}.section-head{display:block}.section-head p{margin-top:9px}.footer{display:block}.footer span{display:block;margin-top:7px}.top-actions .button{padding:8px;font-size:11px} }
-    @media(max-width:460px) { .grid-3,.grid-2{grid-template-columns:1fr}.brand img{width:30px;height:30px}.brand{font-size:14px}.top-actions{gap:5px}.top-actions .button{padding:6px 8px;font-size:10px}.nav{margin-inline:-4px}.nav a{font-size:11px;padding:7px 9px}.section-head{margin-bottom:15px}section{padding:37px 0} }
+    @media(max-width:680px) { .shell{width:min(100% - 28px,1160px)}.topbar{padding:8px 0 5px}.topbar-inner{gap:3px 8px}.nav{overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.hero{padding:49px 0 30px}.grid-3{grid-template-columns:1fr 1fr}.capture-grid{grid-template-columns:1fr 1fr}.architecture,.contribution{grid-template-columns:1fr}.section-head{display:block}.section-head p{margin-top:9px}.footer{display:block}.footer span{display:block;margin-top:7px}.top-actions .button{padding:8px;font-size:11px} }
+    @media(max-width:460px) { .grid-3,.grid-2,.capture-grid{grid-template-columns:1fr}.brand img{width:30px;height:30px}.brand{font-size:14px}.top-actions{gap:5px}.top-actions .button{padding:6px 8px;font-size:10px}.nav{margin-inline:-4px}.nav a{font-size:11px;padding:7px 9px}.section-head{margin-bottom:15px}section{padding:37px 0} }
     @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; animation:none!important } }
     @media print {
       :root,[data-theme="light"],[data-theme="dark"] { color-scheme:light; --bg:#fff; --surface:#fff; --surface2:#f2f5f9; --line:#d7dfe9; --text:#17202b; --muted:#526173; --blue:#3759c4; --cyan:#087d87; --green:#217342; --glow:transparent }
@@ -97,7 +102,7 @@
   <header class="topbar">
     <div class="shell topbar-inner">
     <a class="brand" href="#inicio" aria-label="Inventar.io, inicio"><img src="assets/icon-192.png" alt="" /><span>Inventar.io</span></a>
-    <nav class="nav" aria-label="Secciones del caso"><a href="#producto">Problema</a><a href="#demo-video">Demo</a><a href="#funciones">Qué resuelve</a><a href="#ingenieria">Tecnología</a><a href="#contribucion">Mi trabajo</a><a href="#conversacion">Contacto</a></nav>
+    <nav class="nav" aria-label="Secciones del caso"><a href="#producto">El reto</a><a href="#capturas">El producto</a><a href="#demo-video">Demo</a><a href="#funciones">Qué resuelve</a><a href="#ingenieria">Tecnología</a><a href="#contribucion">Mi trabajo</a></nav>
     <div class="top-actions"><button class="button" id="theme-toggle" type="button" aria-label="Cambiar tema">◐</button><a class="button primary" href="#conversacion">Solicitar demo</a></div>
     </div>
   </header>
@@ -105,10 +110,10 @@
     <section class="hero" id="inicio">
       <div>
         <div class="eyebrow"><i class="dot"></i> Inventario claro para equipos en movimiento</div>
-        <h1>¿Qué tenemos?<br /><span>¿Dónde está?</span></h1>
-        <p class="lead">Consulta el stock por producto y ubicación, revisa las reservas y registra cada movimiento desde el almacén o el móvil.</p>
+        <h1>El inventario,<br /><span>bajo control.</span></h1>
+        <p class="lead">Una forma más clara de saber qué hay, dónde está y qué necesita atención. Consulta existencias, gestiona reservas y registra movimientos desde el almacén o el móvil.</p>
         <div class="chips"><span class="chip">En uso con clientes reales</span><span class="chip">PWA · QR / NFC</span><span class="chip">.NET · React · TypeScript</span></div>
-        <div class="hero-actions"><a class="button primary" href="#conversacion">¿Te interesa? Hablemos ↗</a><a class="button" href="#producto">Ver cómo ayuda ↓</a></div>
+        <div class="hero-actions"><a class="button primary" href="#conversacion">Hablemos de tu inventario ↗</a><a class="button" href="#capturas">Conoce el producto ↓</a></div>
       </div>
     </section>
 
@@ -123,14 +128,26 @@
     </section>
 
 
+    <section id="capturas" aria-labelledby="capturas-title">
+      <div class="section-head"><div><div class="section-index">02 / EL PRODUCTO</div><h2 id="capturas-title">Hecho para el trabajo de cada día.</h2></div><p>Una vista rápida de las áreas principales. Aquí irán capturas reales de la aplicación, con datos de demostración y sin información de clientes.</p></div>
+      <div class="capture-grid">
+        <figure class="capture"><div class="capture-placeholder"><div><span>▦</span>Captura real pendiente</div></div><figcaption>Panel y acciones rápidas</figcaption></figure>
+        <figure class="capture"><div class="capture-placeholder"><div><span>◇</span>Captura real pendiente</div></div><figcaption>Productos y variantes</figcaption></figure>
+        <figure class="capture"><div class="capture-placeholder"><div><span>⌖</span>Captura real pendiente</div></div><figcaption>Almacenes y escaneo</figcaption></figure>
+        <figure class="capture"><div class="capture-placeholder"><div><span>⇄</span>Captura real pendiente</div></div><figcaption>Reservas y movimientos</figcaption></figure>
+        <figure class="capture"><div class="capture-placeholder"><div><span>↗</span>Captura real pendiente</div></div><figcaption>Estadísticas de producto</figcaption></figure>
+        <figure class="capture"><div class="capture-placeholder"><div><span>▤</span>Captura real pendiente</div></div><figcaption>Carta de precios imprimible</figcaption></figure>
+      </div>
+    </section>
+
     <section id="demo-video" class="demo-section" aria-labelledby="demo-title">
-      <div class="section-head"><div><div class="section-index">02 / DEMOSTRACIÓN</div><h2 id="demo-title">Comprueba cómo encaja en tu operativa.</h2></div><p>Un recorrido breve para ver el producto antes de hablar. La demo utilizará datos ficticios.</p></div>
+      <div class="section-head"><div><div class="section-index">03 / DEMOSTRACIÓN</div><h2 id="demo-title">Mira Inventar.io en acción.</h2></div><p>Un recorrido breve para ver el producto antes de hablar. La demo utilizará datos ficticios.</p></div>
       <div id="demo-pending" class="demo-pending"><strong>Pendiente de adjuntar demo</strong></div>
       <div id="demo-player" class="demo-video" hidden><video controls playsinline preload="none" aria-label="Demostración en vídeo de Inventar.io"><source src="demoInventario.mp4" type="video/mp4" />Tu navegador no puede reproducir este vídeo. Prueba con un navegador actualizado.</video></div>
     </section>
 
     <section id="funciones">
-      <div class="section-head"><div><div class="section-index">03 / QUÉ RESUELVE</div><h2>Del catálogo al movimiento diario.</h2></div><p>Un recorrido conectado para mantener el inventario, operar y coordinar al equipo.</p></div>
+      <div class="section-head"><div><div class="section-index">04 / QUÉ RESUELVE</div><h2>Del catálogo al movimiento diario.</h2></div><p>Un recorrido conectado para mantener el inventario, operar y coordinar al equipo.</p></div>
       <div class="grid grid-3">
         <article class="card feature-card"><div class="glyph">◇</div><h3>Catálogo con variantes</h3><p>Productos con imagen y etiquetas configurables para llevar stock por combinación.</p></article>
         <article class="card feature-card"><div class="glyph">▤</div><h3>Stock por ubicación</h3><p>Consulta disponibilidad en almacenes y posiciones y detecta niveles bajos.</p></article>
@@ -142,7 +159,7 @@
       <div class="hero-actions" style="margin-top:20px"><a class="button primary" href="#conversacion">¿Quieres ver un flujo concreto? Hablemos ↗</a></div>
     </section>
     <section id="ingenieria">
-      <div class="section-head"><div><div class="section-index">04 / TECNOLOGÍA Y CONFIANZA</div><h2>Una base preparada para operar.</h2></div><p>La arquitectura mantiene las reglas de stock y permisos en el backend y separa el dominio de la interfaz y la persistencia.</p></div>
+      <div class="section-head"><div><div class="section-index">05 / TECNOLOGÍA Y CONFIANZA</div><h2>Una base preparada para operar.</h2></div><p>La arquitectura mantiene las reglas de stock y permisos en el backend y separa el dominio de la interfaz y la persistencia.</p></div>
       <div class="architecture">
         <div class="stack-card"><h3>Stack y recorrido de una operación</h3><div class="stack"><span>.NET 10</span><span>ASP.NET Core</span><span>EF Core</span><span>React 19</span><span>TypeScript</span><span>Vite / PWA</span><span>SQLite</span><span>Docker</span></div><div class="flow"><b>Cliente PWA</b><em>→</em><b>API</b><em>→</em><b>Aplicación</b><em>→</em><b>Dominio</b><em>→</em><b>Persistencia</b></div></div>
         <div class="stack-card"><h3>Decisiones que importan</h3><div class="story"><strong>Dominio protegido</strong><p>Stock, disponibilidad y reservas tienen invariantes de negocio explícitas.</p></div><div class="story"><strong>Aislamiento por inventario</strong><p>La sesión y el rol se verifican en backend para cada operación.</p></div><div class="story"><strong>Consistencia</strong><p>Transacciones y concurrencia optimista protegen cambios simultáneos.</p></div><div class="story"><strong>Despliegue compacto</strong><p>La API sirve la PWA; Docker Compose prepara el servicio para el servidor.</p></div></div>
@@ -150,7 +167,7 @@
     </section>
 
     <section id="contribucion">
-      <div class="section-head"><div><div class="section-index">05 / AUTORÍA Y HERRAMIENTAS</div><h2>Mi contribución, contada con honestidad.</h2></div><p>Un producto completo exige decisiones de arquitectura, iteración de interfaz, validación con usuarios y una forma sostenible de entregar cambios.</p></div>
+      <div class="section-head"><div><div class="section-index">06 / AUTORÍA Y HERRAMIENTAS</div><h2>Mi contribución, contada con honestidad.</h2></div><p>Un producto completo exige decisiones de arquitectura, iteración de interfaz, validación con usuarios y una forma sostenible de entregar cambios.</p></div>
       <div class="contribution">
         <div class="quote"><div class="eyebrow" style="color:#dce5ff"><i class="dot"></i> IA en mi flujo de trabajo</div><blockquote>“Uso la IA como herramienta de desarrollo, con criterio propio para revisar e integrar el resultado.”</blockquote><small>Automatización e IA aplicadas a mi trabajo diario</small></div>
         <div class="callout"><h3>Qué hice y dónde uso IA</h3><p>He utilizado herramientas de IA sobre todo como apoyo en la implementación del frontend. La arquitectura y el esqueleto del backend en C# son casi en su totalidad trabajo mío. También estoy al día con automatizaciones e integro IA en mi flujo de trabajo y desarrollo, revisando e integrando los resultados con criterio propio.</p><p>La aplicación ya tiene clientes reales y la utiliza el club de rugby al que pertenezco.</p></div>
@@ -158,7 +175,7 @@
     </section>
 
     <section id="conversacion">
-      <div class="callout contact-cta"><div class="eyebrow"><i class="dot"></i> SIGUIENTE PASO</div><h2 style="margin-top:11px">¿Te interesa Inventar.io? Hablemos.</h2><p>Cuéntame cómo gestionáis ahora el inventario. Vemos juntos si Inventar.io encaja y, si tiene sentido, coordinamos una demo guiada con datos ficticios.</p><p>El código fuente de la aplicación permanece privado.</p><div class="contact-links" aria-label="Canales de contacto"><a class="button primary" data-contact="email" hidden>Escríbeme por email ↗</a><a class="button" data-contact="portfolio" hidden>Contacto del portfolio ↗</a><a class="button" data-contact="linkedin" hidden>LinkedIn ↗</a></div><p class="muted-note">Demo privada · Datos ficticios · Sin acceso a datos de clientes</p></div>
+      <div class="callout contact-cta"><div class="eyebrow"><i class="dot"></i> SIGUIENTE PASO</div><h2 style="margin-top:11px">¿Lo vemos juntos?</h2><p>Cuéntame cómo gestionáis ahora el inventario. Vemos si Inventar.io encaja y, si tiene sentido, coordinamos una demo guiada con datos ficticios.</p><p>El código fuente de la aplicación permanece privado.</p><div class="contact-links" aria-label="Canales de contacto"><a class="button primary" data-contact="email" hidden>Escríbeme por email ↗</a><a class="button" data-contact="portfolio" hidden>Contacto del portfolio ↗</a><a class="button" data-contact="linkedin" hidden>LinkedIn ↗</a></div><p class="muted-note">Demo privada · Datos ficticios · Sin acceso a datos de clientes</p></div>
     </section>
   </main>
   <footer class="shell footer"><span>Inventar.io · Caso de estudio de producto y desarrollo</span><span>Demo en vídeo pendiente · Aplicación con uso real</span></footer>
